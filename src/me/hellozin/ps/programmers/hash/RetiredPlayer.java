@@ -13,15 +13,11 @@ public class RetiredPlayer {
         String[] participant = {"leo", "kiki", "eden"};
         String[] completion = {"eden", "kiki"};
         String expected = "leo";
-        Solution solution = new Solution();
-        String actual = solution.solution(participant, completion);
+        String actual = solution(participant, completion);
         System.out.println("result : " + expected.equals(actual));
     }
 
-}
-
-class Solution {
-    public String solution(String[] participant, String[] completion) {
+    public static String solution(String[] participant, String[] completion) {
         Arrays.sort(participant);
         Arrays.sort(completion);
 
@@ -32,4 +28,5 @@ class Solution {
         }
         return participant[participant.length-1];
     }
+
 }
