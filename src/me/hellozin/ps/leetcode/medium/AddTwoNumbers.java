@@ -1,4 +1,4 @@
-package me.hellozin.ps.programmers.hash;
+package me.hellozin.ps.leetcode.medium;
 
 public class AddTwoNumbers {
 
