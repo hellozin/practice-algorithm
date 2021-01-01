@@ -2,14 +2,7 @@ package me.hellozin.ps.leetcode.medium;
 
 public class AddTwoNumbers {
 
-    public static void main(String[] args) {
-        ListNode l1 = ListNode.buildNode(0,9,1);
-        ListNode l2 = ListNode.buildNode(0,1);
-        ListNode result = addTwoNumbers(l1, l2);
-        ListNode.printListNode(result);
-    }
-
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode node = null;
         ListNode head = null;
         boolean carry = false;
@@ -60,9 +53,10 @@ class ListNode {
         val = x;
     }
 
-    public static ListNode buildNode(int... nodeValues) {
+    public static ListNode buildList(int... nodeValues) {
         ListNode node = null;
         ListNode head = null;
+
         for (int nodeValue : nodeValues) {
             if (node == null) {
                 node = new ListNode(nodeValue);
@@ -72,6 +66,7 @@ class ListNode {
                 node = node.next;
             }
         }
+
         return head;
     }
 
@@ -80,5 +75,38 @@ class ListNode {
             System.out.println(head.val);
             head = head.next;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        ListNode listNode = this;
+        int hash = 17;
+
+        while (listNode != null) {
+            hash = 31 * hash + listNode.val;
+            listNode = listNode.next;
+        }
+
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ListNode)) {
+            return false;
+        }
+
+        ListNode listNode = (ListNode) obj;
+        ListNode thisNode = this;
+
+        while (listNode != null && thisNode != null) {
+            if (thisNode.val != listNode.val) {
+                return false;
+            }
+            listNode = listNode.next;
+            thisNode = thisNode.next;
+        }
+
+        return listNode == null && thisNode == null;
     }
 }
