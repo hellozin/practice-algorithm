@@ -2,6 +2,7 @@ package me.hellozin.ps.leetcode.medium;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import me.hellozin.ps.leetcode.model.ListNode;
 import org.junit.jupiter.api.Test;
 
 class AddTwoNumbersTest {
