@@ -29,7 +29,8 @@ class AddTwoNumbersTest {
     }
 
     private void check(ListNode l1, ListNode l2, ListNode expected) {
-        assertEquals(expected, addTwoNumbers.addTwoNumbers(l1, l2));
+        ListNode actual = addTwoNumbers.addTwoNumbers(l1, l2);
+        assertEquals(expected, actual);
     }
 
     private ListNode list(int... nodeValues) {

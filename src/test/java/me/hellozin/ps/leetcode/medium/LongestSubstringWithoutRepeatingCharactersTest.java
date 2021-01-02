@@ -17,7 +17,8 @@ class LongestSubstringWithoutRepeatingCharactersTest {
     }
 
     private void check(String input, int expected) {
-        assertEquals(expected, longestSubstring.lengthOfLongestSubstring(input));
+        int actual = longestSubstring.lengthOfLongestSubstring(input);
+        assertEquals(expected, actual);
     }
 
 }
