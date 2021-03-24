@@ -6,8 +6,15 @@ public class ListNode {
 
     public ListNode next;
 
-    public ListNode(int x) {
-        val = x;
+    public ListNode() {}
+
+    public ListNode(int val) {
+        this.val = val;
+    }
+
+    public ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
     }
 
     public static ListNode buildList(int... nodeValues) {
@@ -27,11 +34,16 @@ public class ListNode {
         return head;
     }
 
-    public void printListNode(ListNode head) {
-        while (head != null) {
-            System.out.println(head.val);
-            head = head.next;
+    public static void printListNode(ListNode head) {
+        ListNode temp = head;
+        if (temp == null) {
+            return;
         }
+        while (temp.next != null) {
+            System.out.print(temp.val + " -> ");
+            temp = temp.next;
+        }
+        System.out.println(temp.val);
     }
 
     @Override
