@@ -37,18 +37,26 @@ public class BlackJack_2798 {
 
     public static int bruteForceTrace(int[] cards, int N, int M) {
         int max = 0;
+        int sum = 0;
         for (int i = 0; i < N - 2; i++) {
+            sum += cards[i];
             for (int j = i + 1; j < N - 1; j++) {
+                sum += cards[j];
                 for (int k = j + 1; k < N; k++) {
-                    int sum = cards[i] + cards[j] + cards[k];
+                    sum += cards[k];
+
                     if (sum == M) {
                         return M;
                     }
+
                     if (sum > max && sum < M) {
                         max = sum;
                     }
+                    sum -= cards[k];
                 }
+                sum -= cards[j];
             }
+            sum -= cards[i];
         }
         return max;
     }
