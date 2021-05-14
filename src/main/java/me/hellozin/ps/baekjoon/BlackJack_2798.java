@@ -6,21 +6,33 @@ package me.hellozin.ps.baekjoon;
  * 18256KB / 236ms
  * */
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class BlackJack_2798 {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int N = scanner.nextInt();
-        int M = scanner.nextInt();
+        int N = 0;
+        int M = 0;
+        int[] cards = null;
 
-        int[] cards = new int[N];
-        for (int i = 0; i < N; i++) {
-            cards[i] = scanner.nextInt();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String[] splitLine = reader.readLine().split(" ");
+            N = Integer.parseInt(splitLine[0]);
+            M = Integer.parseInt(splitLine[1]);
+
+            cards = new int[N];
+            splitLine = reader.readLine().split(" ");
+            for (int i = 0; i < N; i++) {
+                cards[i] = Integer.parseInt(splitLine[i]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        System.out.println("Ans: " + bruteForceTrace(cards, N, M));
+        System.out.println(bruteForceTrace(cards, N, M));
     }
 
     public static int bruteForceTrace(int[] cards, int N, int M) {
