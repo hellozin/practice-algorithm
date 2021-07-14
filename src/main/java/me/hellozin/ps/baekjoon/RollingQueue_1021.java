@@ -8,6 +8,9 @@ import java.util.LinkedList;
 
 public class RollingQueue_1021 {
 
+    static final int LEFT = 0;
+    static final int RIGHT = 1;
+
     public static void main(String[] args) throws IOException {
         // ========== get input data ==========
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -23,7 +26,7 @@ public class RollingQueue_1021 {
         }
         // ========== get input data ==========
 
-        // divide queue
+        // divide queue for decide effective rolling direction
         Deque<Integer> leftQueue = new LinkedList<>();
         Deque<Integer> rightQueue = new LinkedList<>();
         for (int i = 1; i < queueSize/2 + 1; i++) {
@@ -39,40 +42,20 @@ public class RollingQueue_1021 {
         for (int target : targets) {
 
             // when left.size == 0 && right.size == 1
+            // look with line 84
             if (leftQueue.isEmpty()) {
                 leftQueue.offerLast(rightQueue.pollFirst());
             }
 
             // rolling
             if (leftQueue.peekFirst() != target) {
+                // find target located at
+                boolean targetLocatedAtLeftQueue = isTargetLocatedAtLeft(leftQueue, rightQueue, target);
 
-                boolean leftQueueContainsBorder = leftQueue.peekFirst() > leftQueue.peekLast();
-                boolean targetLocatedAtLeftQueue = true;
-
-                // if left.size < right.size, left rolling is better even target located at right.
-                if (rightQueue.peekFirst() == target) {
-                    targetLocatedAtLeftQueue = true;
-                } else if (leftQueueContainsBorder) {
-                    // example) left: [12, 15, 2, 3] right: [4, 5, 6, 7]
-                    targetLocatedAtLeftQueue = (leftQueue.peekFirst() < target) || (target <= leftQueue.peekLast());
-                } else {
-                    targetLocatedAtLeftQueue = (leftQueue.peekFirst() < target) && (target <= leftQueue.peekLast());
-                }
-
-                // left rolling
-                if (targetLocatedAtLeftQueue) {
-                    while (leftQueue.peekFirst() != target) {
-                        rollingOperationCount++;
-                        rightQueue.offerLast(leftQueue.pollFirst());
-                        leftQueue.offerLast(rightQueue.pollFirst());
-                    }
-                // right rolling
-                } else {
-                    while (leftQueue.peekFirst() != target) {
-                        rollingOperationCount++;
-                        leftQueue.offerFirst(rightQueue.pollLast());
-                        rightQueue.offerFirst(leftQueue.pollLast());
-                    }
+                int direction = targetLocatedAtLeftQueue ? LEFT : RIGHT;
+                while (leftQueue.peekFirst() != target) {
+                    rollingQueue(leftQueue, rightQueue, direction);
+                    rollingOperationCount++;
                 }
             }
 
@@ -85,6 +68,35 @@ public class RollingQueue_1021 {
             }
         }
         System.out.println(rollingOperationCount);
+    }
+
+    private static boolean isTargetLocatedAtLeft(Deque<Integer> left, Deque<Integer> right, int target) {
+        // example) left: [12, 15, 2, 3] right: [4, 5, 6, 7]
+        boolean leftQueueContainsBorder = left.peekFirst() > left.peekLast();
+
+        boolean targetLocatedAtLeftQueue = true;
+        if (right.peekFirst() == target) {
+            // if left.size < right.size, left rolling is better even target located at right.
+            targetLocatedAtLeftQueue = true;
+        } else if (leftQueueContainsBorder) {
+            targetLocatedAtLeftQueue = (left.peekFirst() < target) || (target <= left.peekLast());
+        } else {
+            targetLocatedAtLeftQueue = (left.peekFirst() < target) && (target <= left.peekLast());
+        }
+        return targetLocatedAtLeftQueue;
+    }
+
+    private static void rollingQueue(Deque<Integer> left, Deque<Integer> right, int direction) {
+        switch (direction) {
+            case LEFT:
+                right.offerLast(left.pollFirst());
+                left.offerLast(right.pollFirst());
+                break;
+            case RIGHT:
+                left.offerFirst(right.pollLast());
+                right.offerFirst(left.pollLast());
+                break;
+        }
     }
 
 }
