@@ -23,9 +23,7 @@ public class RomanToInteger {
         int prevValue = Integer.MIN_VALUE;
 
         for (int i = s.length() - 1; i >= 0; i--) {
-            char c = s.charAt(i);
-
-            int value = ROMAN.valueOf(String.valueOf(c)).value;
+            int value = getRomanValueAt(s, i);
             if (value < prevValue) {
                 answer -= value;
             } else {
@@ -34,5 +32,10 @@ public class RomanToInteger {
             prevValue = value;
         }
         return answer;
+    }
+
+    private int getRomanValueAt(String s, int i) {
+        char c = s.charAt(i);
+        return ROMAN.valueOf(String.valueOf(c)).value;
     }
 }
